@@ -150,10 +150,12 @@ var Terminal = {
 		}
 		
 		$(document)
-			.keypress($.proxy(ifActive(function(e) {	
+			.keypress($.proxy(ifActive(function(e) {
+				var character = "";
+				var letter = "";
 				if (e.which >= 32 && e.which <= 126) {   
-					var character = String.fromCharCode(e.which);
-					var letter = character.toLowerCase();
+					character = String.fromCharCode(e.which);
+					letter = character.toLowerCase();
 				} else {
 					return;
 				}
@@ -163,17 +165,17 @@ var Terminal = {
 				}
 				
 				if (this.sticky.keys.ctrl) {
-					if (letter == 'w') {
+					if (letter === 'w') {
 						this.deleteWord();
-					} else if (letter == 'h') {
+					} else if (letter === 'h') {
 						Terminal.deleteCharacter(false);
-					} else if (letter == 'l') {
+					} else if (letter === 'l') {
 						this.clear();
-					} else if (letter == 'a') {
+					} else if (letter === 'a') {
 						this.setPos(0);
-					} else if (letter == 'e') {
+					} else if (letter === 'e') {
 						this.setPos(this.buffer.length);
-					} else if (letter == 'd') {
+					} else if (letter === 'd') {
 						this.runCommand('logout');
 					}
 				} else {
@@ -250,7 +252,7 @@ var Terminal = {
 	
 	setCursorState: function(state, fromTimeout) {
 		this.cursorBlinkState = state;
-		if (this.config.cursor_style == 'block') {
+		if (this.config.cursor_style === 'block') {
 			if (state) {
 				$('#cursor').css({color:this.config.bg_color, backgroundColor:this.config.fg_color});
 			} else {
@@ -295,7 +297,7 @@ var Terminal = {
 
 		$('#lcommand').text(left);
 		$('#cursor').text(underCursor);
-		if (underCursor == ' ') {
+		if (underCursor === ' ') {
 			$('#cursor').html('&nbsp;');
 		}
 		$('#rcommand').text(right);
@@ -364,7 +366,7 @@ var Terminal = {
 	moveHistory: function(val) {
 		var newpos = this.historyPos + val;
 		if ((newpos >= 0) && (newpos <= this.history.length)) {
-			if (newpos == this.history.length) {
+			if (newpos === this.history.length) {
 				this.clearInputBuffer();
 			} else {
 				this.buffer = this.history[newpos];
@@ -390,7 +392,7 @@ var Terminal = {
 	},
 	
 	scrollPage: function(num) {
-		$('#screen').animate({scrollTop: $('#screen').scrollTop() + num * ($('#screen').height() * .75)}, this.config.scrollSpeed, 'linear');
+		$('#screen').animate({scrollTop: $('#screen').scrollTop() + num * ($('#screen').height() * 0.75)}, this.config.scrollSpeed, 'linear');
 	},
 
 	scrollLine: function(num) {
@@ -411,7 +413,7 @@ var Terminal = {
 	
 	processInputBuffer: function(cmd) {
 		this.print($('<p>').addClass('command').text(this.config.prompt + this.buffer));
-		var cmd = trim(this.buffer);
+		cmd = trim(this.buffer);
 		this.clearInputBuffer();
 		if (cmd.length == 0) {
 			return false;
@@ -471,6 +473,6 @@ var Terminal = {
 $(document).ready(function() {
 	$('#welcome').show();
 	// Kill Opera's backspace keyboard action.
-	document.onkeydown = document.onkeypress = function(e) { return $.hotkeys.specialKeys[e.keyCode] != 'backspace'; };
+	document.onkeydown = document.onkeypress = function(e) { return $.hotkeys.specialKeys[e.keyCode] !== 'backspace'; };
 	Terminal.init();
 });
