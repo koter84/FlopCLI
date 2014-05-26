@@ -1,14 +1,12 @@
-﻿/* 	
- Client-side logic for Wordpress CLI theme
- R. McFarland, 2006, 2007, 2008
- http://thrind.xamai.ca/
- 
- jQuery rewrite and overhaul
- Chromakode, 2010
- http://www.chromakode.com/
-*/
+﻿// Client-side logic for Wordpress CLI theme
+ // R. McFarland, 2006, 2007, 2008
+ // http://thrind.xamai.ca/
+ //
+ // jQuery rewrite and overhaul
+ // Chromakode, 2010
+ // http://www.chromakode.com/
 
-/**** start from http://snippets.dzone.com/posts/show/701 ****/
+// start from http://snippets.dzone.com/posts/show/701
 // Removes leading whitespaces
 function ltrim(value) {
 	if (value) {
@@ -33,7 +31,7 @@ function trim(value) {
 		return ltrim(rtrim(value));
 	}
 	return '';
-} /**** end from http://snippets.dzone.com/posts/show/701 ****/
+} // end from http://snippets.dzone.com/posts/show/701
 
 function entityEncode(str) {
 	str = str.replace(/&/g, '&amp;');
