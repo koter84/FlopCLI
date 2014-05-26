@@ -50,7 +50,7 @@ var TerminalShell = {
 	commands: {
 		help: function help(terminal) {
 			terminal.print($('<h3>help</h3>'));
-			cmd_list = $('<ul>');
+			var cmd_list = $('<ul>');
 			$.each(this.commands, function(name, func) {
 				cmd_list.append($('<li>').text(name));
 			});
@@ -342,8 +342,8 @@ var Terminal = {
 			while (ncp > 0 && this.buffer.charAt(ncp) !== ' ') {
 				ncp--;
 			}
-			left = this.buffer.substr(0, ncp - 1);
-			right = this.buffer.substr(ncp, this.buffer.length - this.pos);
+			var left = this.buffer.substr(0, ncp - 1);
+			var right = this.buffer.substr(ncp, this.buffer.length - this.pos);
 			this.buffer = left + right;
 			this.pos = ncp;
 			this.updateInputDisplay();
@@ -415,7 +415,7 @@ var Terminal = {
 		this.print($('<p>').addClass('command').text(this.config.prompt + this.buffer));
 		cmd = trim(this.buffer);
 		this.clearInputBuffer();
-		if (cmd.length == 0) {
+		if (cmd.length === 0) {
 			return false;
 		}
 		this.addHistory(cmd);
@@ -454,8 +454,7 @@ var Terminal = {
 	
 	runCommand: function(text) {
 		var index = 0;
-		var mine = false;
-		
+
 		this.promptActive = false;
 		var interval = window.setInterval($.proxy(function typeCharacter() {
 			if (index < text.length) {
