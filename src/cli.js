@@ -1,10 +1,10 @@
-﻿// Client-side logic for Wordpress CLI theme
- // R. McFarland, 2006, 2007, 2008
- // http://thrind.xamai.ca/
- //
- // jQuery rewrite and overhaul
- // Chromakode, 2010
- // http://www.chromakode.com/
+// Client-side logic for Wordpress CLI theme
+// R. McFarland, 2006, 2007, 2008
+// http://thrind.xamai.ca/
+//
+// jQuery rewrite and overhaul
+// Chromakode, 2010
+// http://www.chromakode.com/
 
 // start from http://snippets.dzone.com/posts/show/701
 // Removes leading whitespaces
