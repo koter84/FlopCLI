@@ -1,4 +1,6 @@
 // custom commands
+// Don't JSHint on all commands (dot notation)
+/* jshint -W069 */
 
 function pathFilename(path) {
 	var match = /\/([^\/]+)$/.exec(path);
