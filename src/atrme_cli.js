@@ -1,4 +1,6 @@
-﻿function pathFilename(path) {
+// custom commands
+
+function pathFilename(path) {
 	var match = /\/([^\/]+)$/.exec(path);
 	if (match) {
 		return match[1];
