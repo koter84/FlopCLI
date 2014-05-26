@@ -1,11 +1,10 @@
-﻿/*!
- * jQuery Konami code trigger v. 0.1
- *
- * Copyright (c) 2009 Joe Mastey
- * Dual licensed under the MIT and GPL licenses:
- *   http://www.opensource.org/licenses/mit-license.php
- *   http://www.gnu.org/licenses/gpl.html
- */
+// jQuery Konami code trigger v. 0.1
+// 
+// Copyright (c) 2009 Joe Mastey
+// Dual licensed under the MIT and GPL licenses:
+//   http://www.opensource.org/licenses/mit-license.php
+//   http://www.gnu.org/licenses/gpl.html
+
 (function($){
     $.fn.konami             = function( fn, params ) {
         params              = $.extend( {}, $.fn.konami.params, params );
