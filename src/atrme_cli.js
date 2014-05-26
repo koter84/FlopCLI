@@ -210,55 +210,7 @@ TerminalShell.commands['rm'] = function(terminal, flags, path) {
 };
 
 TerminalShell.commands['wget'] = TerminalShell.commands['curl'] = function(terminal, dest) {
-	if (dest == "blog" || dest == "blog-cn") {
-		terminal.setWorking(true);
-		var browser = $('<div>')
-			.addClass('browser')
-			.append($('<iframe>')
-					.prop('src', "http://blog.atr.me").width("100%").height(600)
-					.one('load', function() {
-						terminal.setWorking(false);
-					}));
-		terminal.print(browser);
-		terminal.print("If returned a 404 error, please add http://, https:// or ftp:// at start of the URL.");
-		return browser;
-	} else if (dest == "blog-en" || dest == 'iblog') {
-		terminal.setWorking(true);
-		var browser = $('<div>')
-			.addClass('browser')
-			.append($('<iframe>')
-					.prop('src', "http://iblog.atr.me").width("100%").height(600)
-					.one('load', function() {
-						terminal.setWorking(false);
-					}));
-		terminal.print(browser);
-		terminal.print("If returned a 404 error, please add http://, https:// or ftp:// at start of the URL.");
-		return browser;
-	} else if (dest == "wiki") {
-		terminal.setWorking(true);
-		var browser = $('<div>')
-			.addClass('browser')
-			.append($('<iframe>')
-					.prop('src', "http://wiki.atr.me").width("100%").height(600)
-					.one('load', function() {
-						terminal.setWorking(false);
-					}));
-		terminal.print(browser);
-		terminal.print("If returned a 404 error, please add http://, https:// or ftp:// at start of the URL.");
-		return browser;
-	} else if (dest == "AboutMe" || dest == "aboutme") {
-		terminal.setWorking(true);
-		var browser = $('<div>')
-			.addClass('browser')
-			.append($('<iframe>')
-					.prop('src', "http://about.me/AstroProfundis").width("100%").height(600)
-					.one('load', function() {
-						terminal.setWorking(false);
-					}));
-		terminal.print(browser);
-		terminal.print("If returned a 404 error, please add http://, https:// or ftp:// at start of the URL.");
-		return browser;
-	} else if (dest) {
+	if (dest) {
 		terminal.setWorking(true);
 		var browser = $('<div>')
 			.addClass('browser')
