@@ -24,7 +24,8 @@ var xkcd = {
 	cache: {},
 	
 	get: function(num, success, error) {
-		if (num == null) {
+		var path = '';
+		if (num === null) {
 			path = '';
 		} else if (Number(num)) {
 			path = String(num);
@@ -42,10 +43,10 @@ var xkcd = {
 	}
 };
 
-TerminalShell.commands['sudo'] = function(terminal) {
+var TerminalShell.commands['sudo'] = function(terminal) {
 	var cmd_args = Array.prototype.slice.call(arguments);
 	cmd_args.shift(); // terminal
-	if (cmd_args.join(' ') == 'make me a sandwich') {
+	if (cmd_args.join(' ') === 'make me a sandwich') {
 		terminal.print('Okay.');
 	} else {
 		var cmd_name = cmd_args.shift();
@@ -142,9 +143,9 @@ TerminalShell.pwd = Filesystem;
 
 TerminalShell.commands['cd'] = function(terminal, path) {
 	if (path in this.pwd) {
-		if (this.pwd[path].type == 'dir') {
+		if (this.pwd[path].type === 'dir') {
 			this.pwd[path].enter(terminal);
-		} else if (this.pwd[path].type == 'file') {
+		} else if (this.pwd[path].type === 'file') {
 			terminal.print('cd: '+path+': Not a directory');
 		}
 	} else {
@@ -156,7 +157,7 @@ TerminalShell.commands['dir'] =
 TerminalShell.commands['ls'] = function(terminal, path) {
 	var name_list = $('<ul>');
 	$.each(this.pwd, function(name, obj) {
-		if (obj.type == 'dir') {
+		if (obj.type === 'dir') {
 			name += '/';
 		}
 		name_list.append($('<li>').text(name));
@@ -166,12 +167,12 @@ TerminalShell.commands['ls'] = function(terminal, path) {
 
 TerminalShell.commands['cat'] = function(terminal, path) {
 	if (path in this.pwd) {
-		if (this.pwd[path].type == 'file') {
+		if (this.pwd[path].type === 'file') {
 			this.pwd[path].read(terminal);
-		} else if (this.pwd[path].type == 'dir') {
+		} else if (this.pwd[path].type === 'dir') {
 			terminal.print('cat: '+path+': Is a directory');
 		}
-	} else if (pathFilename(path) == 'alt.txt') {
+	} else if (pathFilename(path) === 'alt.txt') {
 		terminal.setWorking(true);
 		num = Number(path.match(/^\d+/));
 		xkcd.get(num, function(data) {
@@ -187,22 +188,22 @@ TerminalShell.commands['cat'] = function(terminal, path) {
 };
 
 TerminalShell.commands['rm'] = function(terminal, flags, path) {
-	if (flags && flags[0] != '-') {
+	if (flags && flags[0] !== '-') {
 		path = flags;
 	}
 	if (!path) {
 		terminal.print('rm: missing operand');
 	} else if (path in this.pwd) {
-		if (this.pwd[path].type == 'file') {
+		if (this.pwd[path].type === 'file') {
 			delete this.pwd[path];
-		} else if (this.pwd[path].type == 'dir') {
+		} else if (this.pwd[path].type === 'dir') {
 			if (/r/.test(flags)) {
 				delete this.pwd[path];
 			} else {
 				terminal.print('rm: cannot remove '+path+': Is a directory');
 			}
 		}
-	} else if (flags == '-rf' || flags == '-Rf' && path == '/') {
+	} else if (flags === '-rf' || flags === '-Rf' && path === '/') {
 		if (this.sudo) {
 			TerminalShell.commands = {};
 		} else {
@@ -233,15 +234,15 @@ TerminalShell.commands['apt-get'] = TerminalShell.commands['aptitude'] = functio
 	if (!this.sudo && (subcmd in {'update':true, 'upgrade':true, 'dist-upgrade':true})) {
 		terminal.print('E: Unable to lock the administration directory, are you root?');
 	} else {
-		if (subcmd == 'update') {
+		if (subcmd === 'update') {
 			terminal.print('Reading package lists... Done');
-		} else if (subcmd == 'upgrade') {
-			if (($.browser.name == 'msie') || ($.browser.name == 'firefox' && $.browser.versionX < 3)) {
+		} else if (subcmd === 'upgrade') {
+			if (($.browser.name === 'msie') || ($.browser.name === 'firefox' && $.browser.versionX < 3)) {
 				terminal.print($('<p>').append($('<a>').prop('href', 'http://abetterbrowser.org/').text('To complete installation, click here.')));
 			} else {
 				terminal.print('This looks pretty good to me.');
 			}
-		} else if (subcmd == 'dist-upgrade') {
+		} else if (subcmd === 'dist-upgrade') {
 			var longNames = {'win':'Windows', 'mac':'OS X', 'linux':'Linux'};
 			var name = $.os.name;
 			if (name in longNames) {
@@ -250,7 +251,7 @@ TerminalShell.commands['apt-get'] = TerminalShell.commands['aptitude'] = functio
 				name = 'something fancy';
 			}
 			terminal.print('You are already running '+name+'.');
-		} else if (subcmd == 'moo') {
+		} else if (subcmd === 'moo') {
 			terminal.print('        (__)');
 			terminal.print('        (oo)');
 			terminal.print('  /------\\/ ');
@@ -358,9 +359,9 @@ TerminalShell.commands['go'] = Adventure.go = function(terminal, direction) {
 		Adventure.goTo(terminal, Adventure.location.exits[direction]);
 	} else if (!direction) {
 		terminal.print('Go where?');
-	} else if (direction == 'up') {
+	} else if (direction === 'up') {
 		terminal.print("I don't have a swing.");
-	} else if (direction == 'down') {
+	} else if (direction === 'down') {
 		terminal.print("On our first date?");
 	} else {
 		terminal.print('You cannot go '+direction+'.');
@@ -368,7 +369,7 @@ TerminalShell.commands['go'] = Adventure.go = function(terminal, direction) {
 };
 
 TerminalShell.commands['light'] = function(terminal, what) {
-	if (what == "lamp" || what == "candle") {
+	if (what === "lamp" || what === "candle") {
 		if (!Adventure.status.lamp) {
 			terminal.print('You set your lamp ablaze.');
 			Adventure.status.lamp = true;
@@ -427,10 +428,9 @@ TerminalShell.fallback = function(terminal, cmd) {
 		'whoami': 'You\'re a good human being.',
 		'nano': 'Seriously? Why don\'t you just use Notepad.exe? Or MS Paint?',
 		'top': 'It\'s up there --^',
-		'moo':'moo',
+		'moo': 'moo',
 		'ping': 'There is another submarine three miles ahead, bearing 225, forty fathoms down.',
 		'find': 'What do you want to find? IBN5100?',
-		'hello':'Hello.',
 		'more':'Oh, yes! More! More!',
 		'your gay': 'Keep your hands off it!',
 		'hi':'Hi.',
@@ -459,7 +459,7 @@ TerminalShell.fallback = function(terminal, cmd) {
 	
 	cmd = cmd.toLowerCase();
 	if (!oneLiner(terminal, cmd, oneliners)) {
-		if (cmd == "asl" || cmd == "a/s/l") {
+		if (cmd === "asl" || cmd === "a/s/l") {
 			terminal.print(randomChoice([
 				'2/AMD64/Server Rack',
 				'328/M/Transylvania',
@@ -467,21 +467,21 @@ TerminalShell.fallback = function(terminal, cmd) {
 				'48/M/The White House',
 				'7/F/Rapture',
 				'Exactly your age/A gender you\'re attracted to/Far far away.',
-				'7,831/F/Lothlórien',
+				'7831/F/Lothlorien',
 				'42/M/FBI Field Office'
 			]));
-		} else if  (cmd == "hint") {
+		} else if  (cmd === "hint") {
 			terminal.print(randomChoice([
- 				'We offer some really nice polos.',
- 				$('<p>').html('This terminal will remain available at <a href="http://xkcd.com/unixkcd/">http://xkcd.com/unixkcd/</a>'),
- 				'Use the source, Luke!',
- 				'There are cheat codes.'
- 			]));
-		} else if (cmd == 'find IBN5100' || cmd == 'find ibn5100') {
+				'We offer some really nice polos.',
+				$('<p>').html('This terminal will remain available at <a href="http://xkcd.com/unixkcd/">http://xkcd.com/unixkcd/</a>'),
+				'Use the source, Luke!',
+				'There are cheat codes.'
+			]));
+		} else if (cmd === 'find IBN5100' || cmd === 'find ibn5100') {
 			terminal.print('find: "IBN5100": No such Future Gadget');
-		} else if (cmd == 'buy stuff') {
+		} else if (cmd === 'buy stuff') {
 			Filesystem['store'].enter();
-		} else if (cmd == 'time travel') {
+		} else if (cmd === 'time travel') {
 			terminal.print('Error: No IBN5100 available.');
 		} else if (/:\(\)\s*{\s*:\s*\|\s*:\s*&\s*}\s*;\s*:/.test(cmd)) {
 			Terminal.setWorking(true);
