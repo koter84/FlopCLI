@@ -22,13 +22,13 @@
     };
     
     $.fn.konami.checkCode   = function( event, params, tgt ) {
-        if(event.keyCode == params.code[params.step]) {
+        if(event.keyCode === params.code[params.step]) {
             params.step++;
         } else {
             params.step     = 0;
         }
         
-        if(params.step == params.code.length) {
+        if(params.step === params.code.length) {
             tgt.trigger('konami');
             params.step     = 0;
         }
